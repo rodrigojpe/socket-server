@@ -7,7 +7,8 @@ import cors from 'cors';
 
 
 
-const server = new Server();
+
+const server = Server.intance;
 
 // body parser
 server.app.use(bodyParser.urlencoded({ extended: false}));
@@ -21,6 +22,7 @@ server.app.use(cors({ origin: true, credentials: true }));
 
 server.app.use('/', router);
 
+// server.app.listen( server.port, '192.168.0.16');
 
 server.start(  () => {
     console.log(`servidor inicializado en el puerto ${ server.port }`);
