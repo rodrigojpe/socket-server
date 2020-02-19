@@ -6,49 +6,60 @@ export class UsuariosLista {
     
     private lista: Usuario[] = [];
 
+    constructor () {}
 
-    public agregar(usuario: Usuario ) {
-        this.lista.push(usuario);
-        console.log(this.lista);
-    }
+// Agregar un usuario
+public agregar( usuario: Usuario ) {
 
-    public actualizarNombre(id: string, nombre: string) {
+    this.lista.push( usuario );
+    console.log( this.lista );
+    return usuario
+}
 
-        for( let usuario of this.lista) {
+public actualizarNombre( id: string, nombre: string ) {
 
-            if(usuario.id === id){
-                usuario.nombre = nombre 
-            } break;
+    for( let usuario of this.lista ) {
+
+        if ( usuario.id === id ) {
+            usuario.nombre = nombre;
+            break;
         }
-        console.log("=======USUARIO ACTUALIZADO========");
-        console.log( this.lista);
-    }
-
-    public getLista() {
-        return this.lista;
-    }
-
-    public getUsuario(id: string) {
-        return this.lista.find( usuario => usuario.id === id);
-    }
-
-    public getUsuarioSala( sala: string ) {
-
-        return this.lista.filter( usuario => usuario.sala === sala );
-
-    }
-
-    public borrarUsusario( id: string ) {
-        
-        const tempUsuario = this.getUsuario( id );
-
-        this.lista = this.lista.filter(usuario => usuario.id !== id);
-
-        console.log( this.lista );
-
-        return tempUsuario;
 
     }
 
 
+    console.log('===== Actualizando usuario ====');
+    console.log( this.lista );
+
+}
+
+// Obtener lista de usuarios
+public getLista() {
+    return this.lista.filter( usuario => usuario.nombre !== 'sin-nombre' );
+}
+
+// Obtener un usuario
+public getUsuario( id: string ) {
+
+    return this.lista.find( usuario => usuario.id === id );
+
+}
+
+// Obtener usuario en una sala en particular
+public getUsuariosEnSala( sala: string ) {
+
+    return this.lista.filter( usuario =>usuario.sala === sala );
+
+}
+
+// Borrar Usuario
+public borrarUsuario( id: string ) {
+
+    const tempUsuario = this.getUsuario( id );
+
+    this.lista = this.lista.filter( usuario => usuario.id !== id );
+
+    return tempUsuario;
+    
+}
 }

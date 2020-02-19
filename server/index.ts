@@ -22,7 +22,6 @@ server.app.use(cors({ origin: true, credentials: true }));
 
 server.app.use('/', router);
 
-// server.app.listen( server.port, '192.168.0.16');
 
 server.start(  () => {
     console.log(`servidor inicializado en el puerto ${ server.port }`);

@@ -16,6 +16,7 @@ export default class Server {
 
     public app: express.Application;
     public port: number;
+
     public io: socketIO.Server;
     private httpServer: http.Server; 
 
@@ -25,9 +26,11 @@ export default class Server {
 
         this.app = express();
         this.port = SERVER_PORT;
+
         this.httpServer = new http.Server( this.app );
         this.io = socketIO(this.httpServer);
-        this.escucharSocket();
+
+        this.escucharSockets();
 
     }
 
@@ -35,29 +38,33 @@ export default class Server {
         return this._intance ||  (this._intance = new this() )
     }
 
-    private escucharSocket() {
+    private escucharSockets() {
 
-        console.log('Escuchando conecciones - socket');
+        console.log('Escuchando conecciones - sockets');
 
         this.io.on('connection', (cliente:any) => {
             // console.log(cliente.id);
+
             //conectar Cliente
-             socket.ConectarCliente( cliente );
+            socket.ConectarCliente( cliente, this.io );
            
+            // configurar Usuario
+            socket.configurarUsario( cliente, this.io);
+
+            // obtener usuarios
+            socket.obtenerUsuarios( cliente, this.io );
 
             //mensajes
             socket.mensaje( cliente, this.io );
             
             // desconectar
-            socket.desconectar(cliente);
-
-            // configurar Usuario
-            socket.configurarUsario( cliente, this.io);
+            socket.desconectar(cliente, this.io);
+            
 
         });
     } 
 
     start( callback: Function ) {
-        this.httpServer.listen( this.port, callback() );
+        this.httpServer.listen( this.port, callback );
     }
 }

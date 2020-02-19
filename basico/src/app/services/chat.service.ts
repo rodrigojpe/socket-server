@@ -7,15 +7,25 @@ import { WebsocketService } from './websocket.service';
 export class ChatService {
 
   constructor(
+
      public wsService: WebsocketService
+
   ) { }
+
+
   sendMessage( mensaje: string) {
+
     const payload = {
+
       de: this.wsService.getUsusario().nombre,
       cuerpo: mensaje
+
     };
+
     this.wsService.emit('mensaje', payload);
   }
+
+
 
   getMessage( ) {
    return this.wsService.listen('mensaje-nuevo');
@@ -24,4 +34,13 @@ export class ChatService {
   getMessagesPrivate() {
     return this.wsService.listen('mensaje-privado');
   }
+
+  getUsuariosActivos() {
+    return this.wsService.listen('usuarios-activos');
+  }
+
+  emitirUsuariosActivos() {
+    this.wsService.emit( 'obtener-usuarios');
+  }
+
 }
